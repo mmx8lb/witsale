@@ -4,39 +4,32 @@
 
 - **操作系统**: Debian Linux
 - **PostgreSQL数据库**:
-  - 用户名: lb
-  - 密码: 00000
-  - 数据库名: witsale
-  - 端口: 5432
+  - 用户名: ${DB_USER} (示例: postgres)
+  - 密码: ${DB_PASSWORD} (请在 .env 中配置)
+  - 数据库名: ${DB_NAME} (示例: witsale)
+  - 端口: ${DB_PORT} (默认: 5432)
 
 ## 2. 数据库配置
 
 ### 2.1 数据库状态
 
-- PostgreSQL服务: ✅ 运行中
-- witsale数据库: ✅ 已存在
-- 数据库表: ✅ 已清空
+- PostgreSQL服务: 需要确认运行状态
+- witsale数据库: 需要创建
+- 数据库表: 需要通过迁移脚本创建
 
 ### 2.2 数据库连接验证
 
 ```bash
-# 连接到postgres数据库
-psql -U lb -h localhost -d postgres -c "\l"
+# 连接到postgres数据库（请替换为你的用户名）
+psql -U ${DB_USER} -h ${DB_HOST} -d postgres -c "\l"
 
 # 连接到witsale数据库
-psql -U lb -h localhost -d witsale -c "\dt"
+psql -U ${DB_USER} -h ${DB_HOST} -d ${DB_NAME} -c "\dt"
 ```
 
 ### 2.3 数据库表结构
 
-当前witsale数据库包含以下表:
-- customers
-- order_items
-- orders
-- products
-- users
-
-所有表已被清空，确保环境初始状态一致。
+需要通过 Alembic 迁移脚本创建表。
 
 ## 3. 后端配置
 
@@ -44,12 +37,22 @@ psql -U lb -h localhost -d witsale -c "\dt"
 
 后端配置文件: `backend/.env`
 
+**请从 `backend/.env.example` 复制模板并配置：**
+
+```bash
+cd backend
+cp .env.example .env
+# 然后编辑 .env 文件，填入你的配置
+```
+
+`.env` 文件内容示例：
+
 ```env
 # 数据库连接配置
-DATABASE_URL=postgresql://lb:00000@localhost:5432/witsale
+DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
 
 # Redis配置
-REDIS_URL=redis://localhost:6379/0
+REDIS_URL=redis://${REDIS_HOST}:${REDIS_PORT}/${REDIS_DB}
 
 # 应用配置
 APP_NAME=Witsale
@@ -57,13 +60,18 @@ APP_VERSION=1.0.0
 APP_ENV=development
 
 # 安全配置
-SECRET_KEY=your-secret-key-here
+SECRET_KEY=${SECRET_KEY}
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
 
 # 日志配置
 LOG_LEVEL=INFO
 ```
+
+**重要提示**:
+- `.env` 文件已在 `.gitignore` 中，不会被提交到版本控制
+- 请使用强密码作为 `SECRET_KEY`
+- 生产环境请设置 `DEBUG=False`
 
 ### 3.2 依赖项
 

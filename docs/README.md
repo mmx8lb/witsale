@@ -88,9 +88,9 @@
 | 需求文档 | `docs/requirements/witsale-requirements.md` | ✅ 已完成 |
 | 后端架构 | `docs/architecture/backend-implementation-plan.md` | ✅ 已完成 |
 | 项目结构审查 | `docs/architecture/project-structure-review.md` | ✅ 已完成 |
-| 前端架构 | `docs/architecture/frontend-implementation-plan.md` | 📋 待创建 |
-| 数据库设计 | `docs/database/schema.md` | 📋 待创建 |
-| API文档 | `docs/api/` | 📋 待创建 |
+| 前端架构 | `docs/architecture/frontend-implementation-plan.md` | ✅ 已完成 |
+| 数据库设计 | `docs/database/schema.md` | ✅ 已完成 |
+| API文档 | `docs/api/api-design.md` | ✅ 已完成 |
 | 规格说明 | `docs/specifications/` | ✅ 已完成 |
 | 开发指南 | `docs/guides/development-process.md` | ✅ 已完成 |
 | 会议记录 | `docs/meetings/2026-03-18-项目启动与需求梳理.md` | ✅ 已完成 |
