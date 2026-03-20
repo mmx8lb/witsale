@@ -39,7 +39,6 @@ class Product(Base):
     # 关系
     category = relationship("Category", back_populates="products")
     skus = relationship("ProductSKU", back_populates="product")
-    prices = relationship("ProductPrice", back_populates="product")
     attributes = relationship("ProductAttribute", back_populates="product")
 
 
@@ -62,6 +61,7 @@ class ProductSKU(Base):
     
     # 关系
     product = relationship("Product", back_populates="skus")
+    prices = relationship("ProductPrice", back_populates="sku")
 
 
 class ProductPrice(Base):
@@ -69,7 +69,7 @@ class ProductPrice(Base):
     __tablename__ = "product_prices"
     
     id = Column(Integer, primary_key=True, index=True)
-    product_id = Column(Integer, ForeignKey("products.id"), nullable=False)
+    sku_id = Column(Integer, ForeignKey("product_skus.id"), nullable=False)
     price_type = Column(String(20), nullable=False)  # 企业价、渠道价、终端价、零售价
     price = Column(Float, nullable=False)
     min_quantity = Column(Integer, nullable=False, default=1)
@@ -79,7 +79,7 @@ class ProductPrice(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
     # 关系
-    product = relationship("Product", back_populates="prices")
+    sku = relationship("ProductSKU", back_populates="prices")
 
 
 class ProductAttribute(Base):

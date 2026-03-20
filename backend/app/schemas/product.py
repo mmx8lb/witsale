@@ -38,8 +38,7 @@ class CategoryInDB(CategoryBase):
 
 class Category(CategoryInDB):
     """分类响应模型"""
-    parent: Optional["Category"] = None
-    children: List["Category"] = []
+    pass
 
 
 class ProductAttributeBase(BaseModel):
@@ -117,11 +116,6 @@ class ProductSKUInDB(ProductSKUBase):
         from_attributes = True
 
 
-class ProductSKU(ProductSKUInDB):
-    """商品SKU响应模型"""
-    pass
-
-
 class ProductPriceBase(BaseModel):
     """商品价格基础模型"""
     price_type: str = Field(..., min_length=1, max_length=20)
@@ -148,7 +142,7 @@ class ProductPriceUpdate(BaseModel):
 class ProductPriceInDB(ProductPriceBase):
     """数据库中的商品价格模型"""
     id: int
-    product_id: int
+    sku_id: int
     created_at: datetime
     updated_at: datetime
     
@@ -159,6 +153,11 @@ class ProductPriceInDB(ProductPriceBase):
 class ProductPrice(ProductPriceInDB):
     """商品价格响应模型"""
     pass
+
+
+class ProductSKU(ProductSKUInDB):
+    """商品SKU响应模型"""
+    prices: List[ProductPrice] = []
 
 
 class ProductBase(BaseModel):
@@ -200,7 +199,6 @@ class Product(ProductInDB):
     """商品响应模型"""
     category: Category
     skus: List[ProductSKU] = []
-    prices: List[ProductPrice] = []
     attributes: List[ProductAttribute] = []
 
 

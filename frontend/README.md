@@ -1,12 +1,22 @@
-# Witsale 慧售 - 前端项目初始化文档
+# Witsale 慧售 - 前端项目文档
 
 ## 项目概述
 
-Witsale 慧售前端项目是一个企业销售管理系统的前端部分，包含企业门户、管理后台等多个模块。本项目采用 Bootstrap 框架构建，实现响应式设计，确保在不同设备上都能良好显示。
+Witsale 慧售前端项目是一个企业销售管理系统的前端部分，包含两个主要模块：
+- **门户网站**：面向访客的企业网站，采用 Bootstrap 构建，有利于SEO
+- **管理后台**：面向企业员工的管理系统，采用 React + TypeScript + Ant Design 构建
 
 ## 技术栈
 
+### 门户网站
 - **前端框架**: Bootstrap 5
+- **开发语言**: 原生 JavaScript
+- **构建工具**: 无（直接静态部署）
+- **版本控制**: Git
+
+### 管理后台
+- **前端框架**: React 18 + TypeScript
+- **UI组件库**: Ant Design
 - **构建工具**: Vite
 - **包管理**: npm
 - **代码风格**: ESLint + Prettier
@@ -16,64 +26,56 @@ Witsale 慧售前端项目是一个企业销售管理系统的前端部分，包
 
 ```
 frontend/
-├── index.html          # 主HTML文件
-├── main.js            # 主JavaScript文件
-├── style.css          # 自定义样式文件
-├── package.json       # 项目配置文件
-├── package-lock.json  # 依赖版本锁定文件
-├── vite.config.js     # Vite配置文件
-├── .eslintrc.js       # ESLint配置文件
-├── .prettierrc        # Prettier配置文件
-├── .gitignore         # Git忽略文件
-└── README.md          # 项目说明文档
+├── admin/                # 管理后台
+│   ├── src/              # 源代码
+│   ├── package.json      # 项目配置
+│   ├── tsconfig.json     # TypeScript配置
+│   └── vite.config.ts    # Vite配置
+├── web/                 # 门户网站
+│   ├── index.html        # 主HTML文件
+│   ├── main.js           # 主JavaScript文件
+│   ├── style.css         # 自定义样式文件
+│   └── src/              # 源代码
+├── dist/                # 构建产物
+├── public/              # 公共资源
+├── .gitignore           # Git忽略文件
+└── README.md            # 项目说明文档
 ```
 
 ## 快速开始
 
-### 1. 安装依赖
+### 门户网站
+
+门户网站为静态网站，直接在浏览器中打开 `web/index.html` 即可访问。
+
+### 管理后台
+
+1. **安装依赖**
 
 ```bash
+cd admin
 npm install
 ```
 
-### 2. 启动开发服务器
+2. **启动开发服务器**
 
 ```bash
 npm run dev
 ```
 
-开发服务器将在 `http://localhost:5173` 启动。
+开发服务器将在 `http://localhost:3003` 启动。
 
-### 3. 构建生产版本
+3. **构建生产版本**
 
 ```bash
 npm run build
 ```
 
-构建产物将生成在 `dist` 目录中。
-
-## 代码风格
-
-本项目使用 ESLint 和 Prettier 确保代码风格一致：
-
-- **ESLint**: 检查代码质量和潜在问题
-- **Prettier**: 自动格式化代码
-
-### 运行代码检查
-
-```bash
-npm run lint
-```
-
-### 自动格式化代码
-
-```bash
-npm run format
-```
+构建产物将生成在 `admin/dist` 目录中。
 
 ## 项目功能模块
 
-### 企业门户
+### 门户网站
 
 企业门户是面向访客的网站，包含以下功能：
 
@@ -97,32 +99,35 @@ npm run format
 
 ## 响应式设计
 
-本项目采用 Bootstrap 的响应式网格系统，确保在不同设备上都能良好显示：
+### 门户网站
+采用 Bootstrap 的响应式网格系统，确保在不同设备上都能良好显示：
 
 - **移动设备**: 小于 576px
 - **平板设备**: 576px - 768px
 - **桌面设备**: 768px - 992px
 - **大屏幕设备**: 大于 992px
 
+### 管理后台
+采用 Ant Design 的响应式设计，适配不同屏幕尺寸。
+
 ## 部署说明
 
-### 1. 构建生产版本
+### 门户网站
+1. 将 `web` 目录中的所有文件部署到 Web 服务器
+2. 配置域名指向部署服务器
+3. 配置 SSL 证书，确保 HTTPS 访问
+
+### 管理后台
+1. **构建生产版本**
 
 ```bash
+cd admin
 npm run build
 ```
 
-### 2. 部署到服务器
-
-将 `dist` 目录中的文件部署到 Web 服务器，如 Nginx、Apache 等。
-
-### 3. 域名配置
-
-将 `www.witsale.com` 域名指向部署服务器的 IP 地址。
-
-### 4. SSL 证书
-
-为域名配置 SSL 证书，确保 HTTPS 访问。
+2. 将 `admin/dist` 目录中的文件部署到 Web 服务器
+3. 配置域名指向部署服务器
+4. 配置 SSL 证书，确保 HTTPS 访问
 
 ## 开发规范
 
@@ -140,40 +145,19 @@ npm run build
 - **分支管理**: 遵循 Git Flow 工作流
 - **代码审查**: 所有代码修改必须经过审查
 
-### 测试规范
-
-- **单元测试**: 测试各个模块的独立功能
-- **集成测试**: 测试模块之间的交互
-- **端到端测试**: 测试整个系统的功能
-
-## 依赖管理
-
-### 核心依赖
-
-- **bootstrap**: 前端框架
-- **@popperjs/core**: Bootstrap 依赖
-
-### 开发依赖
-
-- **vite**: 构建工具
-- **eslint**: 代码质量检查
-- **prettier**: 代码格式化
-- **eslint-config-prettier**: ESLint 与 Prettier 集成
-- **eslint-plugin-prettier**: ESLint Prettier 插件
-
 ## 常见问题
 
-### 1. 开发服务器启动失败
+### 1. 管理后台开发服务器启动失败
 
 - **问题**: 端口被占用
-- **解决方法**: 修改 `vite.config.js` 中的端口配置
+- **解决方法**: 修改 `admin/vite.config.ts` 中的端口配置
 
-### 2. 依赖安装失败
+### 2. 管理后台依赖安装失败
 
 - **问题**: 网络问题或依赖版本冲突
-- **解决方法**: 检查网络连接，删除 `node_modules` 和 `package-lock.json` 后重新安装
+- **解决方法**: 检查网络连接，删除 `admin/node_modules` 和 `admin/package-lock.json` 后重新安装
 
-### 3. 构建失败
+### 3. 管理后台构建失败
 
 - **问题**: 代码错误或配置问题
 - **解决方法**: 检查 ESLint 错误，确保代码符合规范
@@ -186,7 +170,7 @@ npm run build
 
 ## 版本历史
 
-- **v1.0.0** (2026-03-20): 项目初始化，企业门户基础功能实现
+- **v1.0.0** (2026-03-20): 项目初始化，完成目录隔离，企业门户和管理后台基础功能实现
 
 ---
 

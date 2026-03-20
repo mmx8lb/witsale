@@ -63,7 +63,11 @@ class ProductService:
             model=product_data.model,
             is_active=product_data.is_active
         )
-        return Product.model_validate(product)
+        # 加载category关系
+        product_with_category = await self.repository.get_product(product.id)
+        if not product_with_category:
+            raise ValueError("创建商品后无法获取商品详情")
+        return Product.model_validate(product_with_category)
     
     async def get_product(self, product_id: int) -> Optional[Product]:
         """获取商品详情"""
@@ -95,8 +99,13 @@ class ProductService:
         sku = await self.repository.create_sku(
             product_id=product_id,
             sku_code=sku_data.sku_code,
+            name=sku_data.name,
+            stock=sku_data.stock,
+            cost_price=sku_data.cost_price,
+            weight=sku_data.weight,
+            volume=sku_data.volume,
             attributes=sku_data.attributes,
-            stock=sku_data.stock
+            is_active=sku_data.is_active
         )
         return ProductSKU.model_validate(sku)
     

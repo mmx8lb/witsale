@@ -102,7 +102,6 @@ Witsale 系统包含以下核心模块的数据模型：
 **关系**：
 - 与 Category 是多对一关系
 - 与 ProductSKU 是一对多关系
-- 与 ProductPrice 是一对多关系
 - 与 ProductAttribute 是一对多关系
 
 ### 3.3 ProductSKU (商品SKU)
@@ -124,13 +123,14 @@ Witsale 系统包含以下核心模块的数据模型：
 
 **关系**：
 - 与 Product 是多对一关系
+- 与 ProductPrice 是一对多关系
 
 ### 3.4 ProductPrice (商品价格)
 
 | 字段名 | 类型 | 描述 | 约束 |
 |-------|------|------|------|
 | id | Integer | 价格ID | 主键，索引 |
-| product_id | Integer | 商品ID | 外键，非空 |
+| sku_id | Integer | SKU ID | 外键，非空 |
 | price_type | String(20) | 价格类型 | 非空 |
 | price | Float | 价格 | 非空 |
 | min_quantity | Integer | 最小数量 | 非空，默认1 |
@@ -140,7 +140,7 @@ Witsale 系统包含以下核心模块的数据模型：
 | updated_at | DateTime | 更新时间 | 默认当前时间，自动更新 |
 
 **关系**：
-- 与 Product 是多对一关系
+- 与 ProductSKU 是多对一关系
 
 ### 3.5 ProductAttribute (商品属性)
 
@@ -651,6 +651,7 @@ Witsale 系统包含以下核心模块的数据模型：
 - **用户** → 角色 → 权限
 - **商品** → 分类
 - **商品** → SKU → 库存
+- **商品** → SKU → 价格
 - **订单** → 订单明细 → 商品
 - **订单** → 支付记录
 - **订单** → 状态历史

@@ -77,14 +77,22 @@ class ProductRepository:
         """获取商品详情"""
         result = await self.db.execute(
             select(Product)
-            .options(selectinload(Product.skus).selectinload(ProductSKU.prices))
+            .options(
+                selectinload(Product.category),
+                selectinload(Product.skus).selectinload(ProductSKU.prices),
+                selectinload(Product.attributes)
+            )
             .where(Product.id == product_id)
         )
         return result.scalar_one_or_none()
     
     async def get_products(self, category_id: Optional[int] = None, is_active: Optional[bool] = None, skip: int = 0, limit: int = 100) -> List[Product]:
         """获取商品列表"""
-        query = select(Product)
+        query = select(Product).options(
+            selectinload(Product.category),
+            selectinload(Product.skus).selectinload(ProductSKU.prices),
+            selectinload(Product.attributes)
+        )
         if category_id is not None:
             query = query.where(Product.category_id == category_id)
         if is_active is not None:
@@ -112,13 +120,18 @@ class ProductRepository:
         return result.rowcount > 0
     
     # SKU相关操作
-    async def create_sku(self, product_id: int, sku_code: str, attributes: Dict[str, Any], stock: int = 0) -> ProductSKU:
+    async def create_sku(self, product_id: int, sku_code: str, name: str, stock: int = 0, cost_price: float = 0.0, weight: Optional[float] = None, volume: Optional[float] = None, attributes: Optional[Dict[str, Any]] = None, is_active: bool = True) -> ProductSKU:
         """创建SKU"""
         sku = ProductSKU(
             product_id=product_id,
             sku_code=sku_code,
+            name=name,
+            stock=stock,
+            cost_price=cost_price,
+            weight=weight,
+            volume=volume,
             attributes=attributes,
-            stock=stock
+            is_active=is_active
         )
         self.db.add(sku)
         await self.db.commit()
