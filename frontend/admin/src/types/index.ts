@@ -2,21 +2,32 @@
 export interface Product {
   id: string;
   name: string;
-  category: string;
-  categoryId: string;
+  category: any;
+  category_id: number;
   description: string;
-  status: string;
+  brand: string;
+  model: string;
+  is_active: boolean;
   created_at: string;
   updated_at: string;
   skus: Sku[];
+  prices: any[];
+  attributes: any[];
 }
 
 export interface Sku {
   id: string;
   sku_code: string;
   name: string;
-  price: number;
   stock: number;
+  cost_price: number;
+  weight?: number;
+  volume?: number;
+  attributes?: any;
+  is_active: boolean;
+  created_at?: string;
+  updated_at?: string;
+  prices?: any[];
 }
 
 export interface Category {

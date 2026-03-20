@@ -81,7 +81,7 @@ function InventoryManagement() {
       dataIndex: 'quantity', 
       key: 'quantity',
       render: (text: number, record: Inventory) => (
-        <Space direction="vertical">
+        <Space orientation="vertical">
           <Text>{text}</Text>
           <Progress 
             percent={(text / (record.threshold * 2)) * 100} 

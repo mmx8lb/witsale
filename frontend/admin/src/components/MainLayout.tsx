@@ -8,6 +8,7 @@ import {
   InboxOutlined, 
   UserOutlined, 
   CreditCardOutlined, 
+  FolderOutlined,
 
   BellOutlined,
   SettingOutlined,
@@ -43,6 +44,11 @@ function MainLayout() {
       key: '2',
       icon: <ProductOutlined />,
       label: <Link to="/products">商品管理</Link>,
+    },
+    {
+      key: '2.1',
+      icon: <FolderOutlined />,
+      label: <Link to="/categories">分类管理</Link>,
     },
     {
       key: '3',

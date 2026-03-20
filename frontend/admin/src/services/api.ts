@@ -54,6 +54,16 @@ api.interceptors.response.use(
           // 资源不存在
           alert('请求的资源不存在');
           break;
+        case 422:
+          // 验证错误
+          const errorDetails = error.response.data.detail;
+          if (Array.isArray(errorDetails)) {
+            const errorMessages = errorDetails.map((err: any) => `${err.loc.join('.')}: ${err.msg}`).join('\n');
+            alert(`验证错误:\n${errorMessages}`);
+          } else {
+            alert(`验证错误: ${errorDetails}`);
+          }
+          break;
         case 500:
           // 服务器错误
           alert('服务器内部错误');
